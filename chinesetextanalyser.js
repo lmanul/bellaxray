@@ -33,7 +33,6 @@ ChineseTextAnalyzer.onDataReceived = function(data) {
 
   // Hide/show elements for the results page.
   $("#input").hide();
-  $("#purpose").hide();
   $("#explanation").hide();
 
   ChineseTextAnalyzer.analyzeTextWithThresholds();
