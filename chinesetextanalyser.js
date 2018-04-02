@@ -19,6 +19,13 @@ ChineseTextAnalyzer.prototype.getThresholds = function() {
   $.get("thresholds.data", null, ChineseTextAnalyzer.onDataReceived);
 };
 
+ChineseTextAnalyzer.prototype.onBodyLoaded = function() {
+  $('#input').on('input propertychange', this, function(e) {
+    self = e.data;
+    self.analyzeTextWithThresholds();
+  });
+}
+
 ChineseTextAnalyzer.onDataReceived = function(data) {
 
   // Get all lines. Each threshold is a line, and the number of characters is
@@ -30,12 +37,6 @@ ChineseTextAnalyzer.onDataReceived = function(data) {
     var map = lines[i].split(':');
     thresholds[map[0]] = map[1];
   }
-
-  // Hide/show elements for the results page.
-  $("#input").hide();
-  $("#explanation").hide();
-
-  ChineseTextAnalyzer.analyzeTextWithThresholds();
 };
 
 ChineseTextAnalyzer.prototype.initCheckboxes = function() {
@@ -52,17 +53,12 @@ ChineseTextAnalyzer.prototype.initCheckboxes = function() {
       ChineseTextAnalyzer.analyzeTextWithThresholds);
 }
 
-ChineseTextAnalyzer.analyzeTextWithThresholds = function() {
+ChineseTextAnalyzer.prototype.analyzeTextWithThresholds = function() {
   var text = $("#input")[0].value;
 
   var result = $("#result");
   result.empty();
-  result.show();
-  $("#analyzeButton").hide();
-  $("#anotherText").show();
 
-
-  $("#colors").show();
   var activeThresholds = [];
 
   $("#colors").find("input:checked").each(function () {
@@ -73,8 +69,7 @@ ChineseTextAnalyzer.analyzeTextWithThresholds = function() {
   var formattedText = '';
 
   for (var i = 0; i < text.length; i++) {
-    formattedText += ChineseTextAnalyzer.formatOneCharacter(text[i],
-        activeThresholds);
+    formattedText += this.formatOneCharacter(text[i], activeThresholds);
   }
 
   var formattedResult = $('<div id="formatted">' + formattedText + '</div>');
@@ -82,7 +77,7 @@ ChineseTextAnalyzer.analyzeTextWithThresholds = function() {
 };
 
 
-ChineseTextAnalyzer.formatOneCharacter = function(character, activeThresholds) {
+ChineseTextAnalyzer.prototype.formatOneCharacter = function(character, activeThresholds) {
   if (character == '\n') {
     return '<br/>';
   }
@@ -90,7 +85,7 @@ ChineseTextAnalyzer.formatOneCharacter = function(character, activeThresholds) {
     return character + ' ';
   }
 
-  for (var i = 0; i < activeThresholds[i]; i++) {
+  for (var i = 0; i < activeThresholds.length; i++) {
     var threshNum = activeThresholds[i];
     if (!thresholds[threshNum]) {
       // For some reason the object contains an "undefined: undefined" pair.
