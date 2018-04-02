@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <title>BellaXray</title>
+    <style type="text/css">
+      h1 {
+        text-align: center;
+        color: white;
+        border: 1px solid black;
+        padding: 12px;
+        font-family: arial;
+      }
+      h1 a {
+        color: white;
+        text-decoration: none;        
+      }
+      #purpose, #explanation {
+        color: white;
+      }
+      #input {
+        height: 60%;
+        width: 90%;
+        opacity: 0.6;
+        filter: alpha(opacity=60);
+        border: 2px solid black;
+      }
+      #result {
+        height: 80%;
+        width: 95%;
+      }
+      #result {
+        display: none;
+        background-color: white;
+        padding: 5px;
+        border: 1px solid black;
+        overflow-y: auto;
+        letter-spacing: 0.5px;
+        line-height: 20px;
+        line-break: auto;
+        /* word-break: break-all; */
+        text-wrap: unrestricted;
+      }
+      #colors {
+        display: none;
+        font-size: large;
+        margin: 0;
+      }
+      #colors span {
+        margin-right: 10px;
+        padding: 2px 5px;
+      }
+      #analyzeButton, #anotherText {
+        font-size: x-large;
+        margin: 1ex 0;
+        padding: 5px;
+      }
+      #anotherText {
+        display: none;
+      }
+    </style>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="chinesetextanalyser.js"></script>
+    <script type="text/javascript">
+
+      function analyze() {
+        var chineseTextAnalyzer = new ChineseTextAnalyzer();
+        chineseTextAnalyzer.initCheckboxes();
+        chineseTextAnalyzer.getThresholds();
+      }
+
+      function reset() {
+        $("#analyzeButton").show();
+        $("#anotherText").hide();
+        $("#result").hide();
+        $("#colors").hide();
+        $("#input")[0].value = '';
+        $("#input").show();
+        $("#explanation").show();
+      }
+
+    </script>
+
+  </head>
+  <body>
+    <h1><a href="/cncoverage">Chinese text coverage</a></h1>
+    <p id="explanation"><span><b>Paste</b> in your Chinese text:</span></p>
+    <p id="colors"></p>
+    <textarea id="input"></textarea><br/>
+    <div id="result"></div>
+    <button id="analyzeButton" onclick="analyze()"><img src="img/play.png"></button>
+    <button id="anotherText" onclick="reset()"><img src="img/reload.png"></button>
+  </body>
+</html>
