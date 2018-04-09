@@ -6,8 +6,18 @@ var ChineseTextAnalyzer = function() {
 };
 
 ChineseTextAnalyzer.thresholdsToColors = {
-  '0.0': '#ABFFA5',
-  '0.1': '#7FF8FF'};
+  '0.0': '#6da5ff',
+  '0.5': '#6df0ff',
+  '0.6': '#6dffda',
+  '1.1': '#30e886',
+  '1.2': '#30e839',
+  '1.2.5': '#8ce830',
+  '1.3': '#cfe830',
+  '1.4': '#fffb1c',
+  '1.5': '#ffcd1c',
+  '1.6': '#ff951c',
+  'TI1': '#c259ff',
+};
 
 ChineseTextAnalyzer.lineBreakCharacters = [
   '。',
